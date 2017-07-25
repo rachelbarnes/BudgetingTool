@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MyBudgetModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Month">
+          <Key>
+            <PropertyRef Name="MonthId" />
+          </Key>
+          <Property Name="MonthId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MonthName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Spendature">
+          <Key>
+            <PropertyRef Name="SpendatureId" />
+          </Key>
+          <Property Name="SpendatureId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoreId" Type="int" Nullable="false" />
+          <Property Name="StoreTypeId" Type="int" Nullable="false" />
+          <Property Name="AmountSpent" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="PurchaseDate" Type="date" />
+          <Property Name="SpendatureTypeId" Type="int" />
+        </EntityType>
+        <EntityType Name="SpendatureType">
+          <Key>
+            <PropertyRef Name="SpendatureTypeId" />
+          </Key>
+          <Property Name="SpendatureTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SpendatureTypeName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreId" />
+          </Key>
+          <Property Name="StoreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoreName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StoreType">
+          <Key>
+            <PropertyRef Name="StoreTypeId" />
+          </Key>
+          <Property Name="StoreTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoreTypeName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Spendatur__Spend__4D94879B">
+          <End Role="SpendatureType" Type="Self.SpendatureType" Multiplicity="0..1" />
+          <End Role="Spendature" Type="Self.Spendature" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SpendatureType">
+              <PropertyRef Name="SpendatureTypeId" />
+            </Principal>
+            <Dependent Role="Spendature">
+              <PropertyRef Name="SpendatureTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Spendatur__Store__2B3F6F97">
+          <End Role="Store" Type="Self.Store" Multiplicity="1" />
+          <End Role="Spendature" Type="Self.Spendature" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="Spendature">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Spendatur__Store__2C3393D0">
+          <End Role="StoreType" Type="Self.StoreType" Multiplicity="1" />
+          <End Role="Spendature" Type="Self.Spendature" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoreType">
+              <PropertyRef Name="StoreTypeId" />
+            </Principal>
+            <Dependent Role="Spendature">
+              <PropertyRef Name="StoreTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MyBudgetModelStoreContainer">
+          <EntitySet Name="Month" EntityType="Self.Month" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Spendature" EntityType="Self.Spendature" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SpendatureType" EntityType="Self.SpendatureType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StoreType" EntityType="Self.StoreType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Spendatur__Spend__4D94879B" Association="Self.FK__Spendatur__Spend__4D94879B">
+            <End Role="SpendatureType" EntitySet="SpendatureType" />
+            <End Role="Spendature" EntitySet="Spendature" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Spendatur__Store__2B3F6F97" Association="Self.FK__Spendatur__Store__2B3F6F97">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Spendature" EntitySet="Spendature" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Spendatur__Store__2C3393D0" Association="Self.FK__Spendatur__Store__2C3393D0">
+            <End Role="StoreType" EntitySet="StoreType" />
+            <End Role="Spendature" EntitySet="Spendature" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MyBudgetModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Month">
+          <Key>
+            <PropertyRef Name="MonthId" />
+          </Key>
+          <Property Name="MonthId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MonthName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Spendature">
+          <Key>
+            <PropertyRef Name="SpendatureId" />
+          </Key>
+          <Property Name="SpendatureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoreId" Type="Int32" Nullable="false" />
+          <Property Name="StoreTypeId" Type="Int32" Nullable="false" />
+          <Property Name="AmountSpent" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="PurchaseDate" Type="DateTime" Precision="0" />
+          <Property Name="SpendatureTypeId" Type="Int32" />
+          <NavigationProperty Name="SpendatureType" Relationship="Self.FK__Spendatur__Spend__4D94879B" FromRole="Spendature" ToRole="SpendatureType" />
+          <NavigationProperty Name="Store" Relationship="Self.FK__Spendatur__Store__2B3F6F97" FromRole="Spendature" ToRole="Store" />
+          <NavigationProperty Name="StoreType" Relationship="Self.FK__Spendatur__Store__2C3393D0" FromRole="Spendature" ToRole="StoreType" />
+        </EntityType>
+        <EntityType Name="SpendatureType">
+          <Key>
+            <PropertyRef Name="SpendatureTypeId" />
+          </Key>
+          <Property Name="SpendatureTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SpendatureTypeName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Spendature" Relationship="Self.FK__Spendatur__Spend__4D94879B" FromRole="SpendatureType" ToRole="Spendature" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreId" />
+          </Key>
+          <Property Name="StoreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoreName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Spendature" Relationship="Self.FK__Spendatur__Store__2B3F6F97" FromRole="Store" ToRole="Spendature" />
+        </EntityType>
+        <EntityType Name="StoreType">
+          <Key>
+            <PropertyRef Name="StoreTypeId" />
+          </Key>
+          <Property Name="StoreTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoreTypeName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Spendature" Relationship="Self.FK__Spendatur__Store__2C3393D0" FromRole="StoreType" ToRole="Spendature" />
+        </EntityType>
+        <Association Name="FK__Spendatur__Spend__4D94879B">
+          <End Role="SpendatureType" Type="Self.SpendatureType" Multiplicity="0..1" />
+          <End Role="Spendature" Type="Self.Spendature" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SpendatureType">
+              <PropertyRef Name="SpendatureTypeId" />
+            </Principal>
+            <Dependent Role="Spendature">
+              <PropertyRef Name="SpendatureTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Spendatur__Store__2B3F6F97">
+          <End Role="Store" Type="Self.Store" Multiplicity="1" />
+          <End Role="Spendature" Type="Self.Spendature" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="Spendature">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Spendatur__Store__2C3393D0">
+          <End Role="StoreType" Type="Self.StoreType" Multiplicity="1" />
+          <End Role="Spendature" Type="Self.Spendature" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoreType">
+              <PropertyRef Name="StoreTypeId" />
+            </Principal>
+            <Dependent Role="Spendature">
+              <PropertyRef Name="StoreTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MyBudgetEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Month" EntityType="Self.Month" />
+          <EntitySet Name="Spendature" EntityType="Self.Spendature" />
+          <EntitySet Name="SpendatureType" EntityType="Self.SpendatureType" />
+          <EntitySet Name="Store" EntityType="Self.Store" />
+          <EntitySet Name="StoreType" EntityType="Self.StoreType" />
+          <AssociationSet Name="FK__Spendatur__Spend__4D94879B" Association="Self.FK__Spendatur__Spend__4D94879B">
+            <End Role="SpendatureType" EntitySet="SpendatureType" />
+            <End Role="Spendature" EntitySet="Spendature" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Spendatur__Store__2B3F6F97" Association="Self.FK__Spendatur__Store__2B3F6F97">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Spendature" EntitySet="Spendature" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Spendatur__Store__2C3393D0" Association="Self.FK__Spendatur__Store__2C3393D0">
+            <End Role="StoreType" EntitySet="StoreType" />
+            <End Role="Spendature" EntitySet="Spendature" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MyBudgetModelStoreContainer" CdmEntityContainer="MyBudgetEntities">
+          <EntitySetMapping Name="Month">
+            <EntityTypeMapping TypeName="MyBudgetModel.Month">
+              <MappingFragment StoreEntitySet="Month">
+                <ScalarProperty Name="MonthId" ColumnName="MonthId" />
+                <ScalarProperty Name="MonthName" ColumnName="MonthName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Spendature">
+            <EntityTypeMapping TypeName="MyBudgetModel.Spendature">
+              <MappingFragment StoreEntitySet="Spendature">
+                <ScalarProperty Name="SpendatureId" ColumnName="SpendatureId" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="StoreTypeId" ColumnName="StoreTypeId" />
+                <ScalarProperty Name="AmountSpent" ColumnName="AmountSpent" />
+                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+                <ScalarProperty Name="SpendatureTypeId" ColumnName="SpendatureTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SpendatureType">
+            <EntityTypeMapping TypeName="MyBudgetModel.SpendatureType">
+              <MappingFragment StoreEntitySet="SpendatureType">
+                <ScalarProperty Name="SpendatureTypeId" ColumnName="SpendatureTypeId" />
+                <ScalarProperty Name="SpendatureTypeName" ColumnName="SpendatureTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Store">
+            <EntityTypeMapping TypeName="MyBudgetModel.Store">
+              <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoreType">
+            <EntityTypeMapping TypeName="MyBudgetModel.StoreType">
+              <MappingFragment StoreEntitySet="StoreType">
+                <ScalarProperty Name="StoreTypeId" ColumnName="StoreTypeId" />
+                <ScalarProperty Name="StoreTypeName" ColumnName="StoreTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
