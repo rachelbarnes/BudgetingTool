@@ -8,6 +8,7 @@ using BudgetTool;
 using NUnit.Framework; 
 namespace BudgetToolTests {
     public class StoreTypeTests {
+        //still to be tested: return select store types, remove single, 
         [Test]
         public void TestStoreTypeReturnAll() {
             var st = new StoreTypeQueries();
@@ -33,6 +34,16 @@ namespace BudgetToolTests {
             var myStoreTypes = context.StoreType;
             var actualReturnCount = (from type in myStoreTypes select type).ToList().Count();
             Assert.AreEqual(expectedReturnCount, actualReturnCount); 
+        }
+        [Test]
+        public void TestAddSingleStore() {
+            var context = new MyBudgetEntities();
+            var myStoreTypes = context.StoreType;
+            var st = new StoreTypeQueries();
+            var actualReturnCountBefore = (from type in myStoreTypes select type).ToList().Count(); 
+            st.AddSingleStoreType("Entertainment");
+            var actualReturnCountAfter = (from type in myStoreTypes select type).ToList().Count();
+            Assert.AreEqual(actualReturnCountBefore + 1, actualReturnCountAfter); 
         }
         [Test]
         public void TestEditSingleStoreType() {
