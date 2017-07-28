@@ -13,6 +13,7 @@
         <AssociationConnector Association="MyBudgetModel.FK__Spendatur__Spend__4D94879B" ManuallyRouted="false" />
         <AssociationConnector Association="MyBudgetModel.FK__Spendatur__Store__2B3F6F97" ManuallyRouted="false" />
         <AssociationConnector Association="MyBudgetModel.FK__Spendatur__Store__2C3393D0" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MyBudgetModel.DefinedSpendatures" Width="2.125" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

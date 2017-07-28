@@ -10,7 +10,7 @@ namespace BudgetToolTests.QueryTests {
     public class StoreTests {
         [Test]
         public void TestReturnAllStores() {
-            var reset = new ResetTablesInDB();
+            var reset = new ResetTablesInDB(); 
             reset.ResetRowsForStore(); 
             var store = new StoreQueries();
             var expectedCountOfStores = store.ReturnAllStores().Count();
@@ -19,7 +19,7 @@ namespace BudgetToolTests.QueryTests {
         }
         [Test]
         public void TestReturnSingleStore() {
-            var reset = new ResetTablesInDB();
+            var reset = new ResetTablesInDB(); 
             reset.ResetRowsForStore(); 
             var store = new StoreQueries();
             var bestRestaurantEver = store.ReturnSingleStore("Pierre's");

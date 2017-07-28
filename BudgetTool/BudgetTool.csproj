@@ -208,6 +208,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DefinedSpendatures.cs">
+      <DependentUpon>MyBudgetContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -234,6 +237,8 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\ResetTablesInDB.cs" />
+    <Compile Include="Queries\SpendatureQueries.cs" />
+    <Compile Include="Queries\SpendatureTypeQueries.cs" />
     <Compile Include="Queries\StoreQueries.cs" />
     <Compile Include="Queries\StoreTypeQueries.cs" />
     <Compile Include="Spendature.cs">

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 
 namespace BudgetTool.Queries {
-
     public class StoreQueries {
         public List<Store> ReturnAllStores() {
             var context = new MyBudgetEntities();

@@ -66,6 +66,8 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryTests\SpendatureTests.cs" />
+    <Compile Include="QueryTests\SpendatureTypeTests.cs" />
     <Compile Include="QueryTests\StoreTests.cs" />
     <Compile Include="QueryTests\StoreTypeTests.cs" />
   </ItemGroup>

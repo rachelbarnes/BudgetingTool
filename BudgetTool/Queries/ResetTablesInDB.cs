@@ -5,32 +5,32 @@ using System.Web;
 using BudgetTool; 
 namespace BudgetTool.Queries {
     public class ResetTablesInDB {
-            //public void ResetRowsForSpendatureType() {
-            //    var context = new MyBudgetEntities();
-            //    var stq = new SpendatureTypeQueries();
-            //    stq.RemoveAllRowsFromSpendatureType();
-            //    var mySpendatureTypes = context.SpendatureType;
-            //    var allMySpendatureTypes = (from types in mySpendatureTypes select types).ToList();
-            //    var allMySpendatureTypeNamesCurrent = allMySpendatureTypes.Select(x => x.SpendatureTypeName).ToList();
-            //    var testSpendatureTypesToReset = new List<SpendatureType> {
-            //    new SpendatureType { SpendatureTypeName = "Necessity" },
-            //    new SpendatureType { SpendatureTypeName = "Social" },
-            //    new SpendatureType { SpendatureTypeName = "Hospitality" },
-            //    new SpendatureType { SpendatureTypeName = "Baking Non-Profit" },
-            //    new SpendatureType { SpendatureTypeName = "Baking For-Profit" }
-            //};
-            //    var listOfSpendatureTypeNames = new List<string>();
-            //    //there is something that is taking FOREVER to get here
-            //    foreach (var record in testSpendatureTypesToReset) {
-            //        listOfSpendatureTypeNames.Add(record.SpendatureTypeName);
-            //    }
-            //    foreach (var record in testSpendatureTypesToReset) {
-            //        if (!allMySpendatureTypeNamesCurrent.Contains(record.SpendatureTypeName))
-            //            stq.AddNewSpendatureType(record.SpendatureTypeName);
-            //    }
-            //    var allMySpendatureTypesAfterReset = stq.ReturnAllSpendatureTypes();
-            //}
-            public void ResetRowsForStore() {
+        public void ResetRowsForSpendatureType() {
+            var context = new MyBudgetEntities();
+            var stq = new SpendatureTypeQueries();
+            stq.RemoveAllSpendatureTypesAvailable();
+            var mySpendatureTypes = context.SpendatureType;
+            var allMySpendatureTypes = (from types in mySpendatureTypes select types).ToList();
+            var allMySpendatureTypeNamesCurrent = allMySpendatureTypes.Select(x => x.SpendatureTypeName).ToList();
+            var testSpendatureTypesToReset = new List<SpendatureType> {
+                new SpendatureType { SpendatureTypeName = "Necessity" },
+                new SpendatureType { SpendatureTypeName = "Social" },
+                new SpendatureType { SpendatureTypeName = "Hospitality" },
+                new SpendatureType { SpendatureTypeName = "Baking Non-Profit" },
+                new SpendatureType { SpendatureTypeName = "Baking For-Profit" }
+            };
+            var listOfSpendatureTypeNames = new List<string>();
+            //there is something that is taking FOREVER to get here
+            foreach (var record in testSpendatureTypesToReset) {
+                listOfSpendatureTypeNames.Add(record.SpendatureTypeName);
+            }
+            foreach (var record in testSpendatureTypesToReset) {
+                if (!allMySpendatureTypeNamesCurrent.Contains(record.SpendatureTypeName))
+                    stq.AddSpendatureType(record.SpendatureTypeName);
+            }
+            var allMySpendatureTypesAfterReset = stq.ReturnAllSpendatureTypes();
+        }
+        public void ResetRowsForStore() {
                 var context = new MyBudgetEntities();
                 var store = new StoreQueries();
                 store.RemoveAllStoresAvailable();

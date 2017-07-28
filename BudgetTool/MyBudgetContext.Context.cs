@@ -30,5 +30,6 @@ namespace BudgetTool
         public virtual DbSet<SpendatureType> SpendatureType { get; set; }
         public virtual DbSet<Store> Store { get; set; }
         public virtual DbSet<StoreType> StoreType { get; set; }
+        public virtual DbSet<DefinedSpendatures> DefinedSpendatures { get; set; }
     }
 }
