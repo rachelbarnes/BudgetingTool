@@ -56,5 +56,6 @@ namespace BudgetToolTests.QueryTests {
             var actualStoreTypeName = (from type in myStoreTypes where type.StoreTypeName == "Groceries" select type.StoreTypeName).First();
             Assert.AreEqual(expectedStoreTypeName, actualStoreTypeName);
         }
+        
     }
 }

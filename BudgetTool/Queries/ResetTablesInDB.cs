@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using BudgetTool; 
+using BudgetTool;
 namespace BudgetTool.Queries {
     public class ResetTablesInDB {
         public void ResetRowsForSpendatureType() {
@@ -31,13 +31,13 @@ namespace BudgetTool.Queries {
             var allMySpendatureTypesAfterReset = stq.ReturnAllSpendatureTypes();
         }
         public void ResetRowsForStore() {
-                var context = new MyBudgetEntities();
-                var store = new StoreQueries();
-                store.RemoveAllStoresAvailable();
-                var myStores = context.Store;
-                var allMyStores = (from s in myStores select s).ToList();
-                var allMyStoresNamesCurrent = allMyStores.Select(x => x.StoreName).ToList();
-                var sampleStoresToReset = new List<Store> {
+            var context = new MyBudgetEntities();
+            var store = new StoreQueries();
+            store.RemoveAllStoresAvailable();
+            var myStores = context.Store;
+            var allMyStores = (from s in myStores select s).ToList();
+            var allMyStoresNamesCurrent = allMyStores.Select(x => x.StoreName).ToList();
+            var sampleStoresToReset = new List<Store> {
                 new Store {StoreName = "Shop Rite" },
                 new Store {StoreName = "Lowes" },
                 new Store {StoreName = "Petsmart" },
@@ -47,41 +47,83 @@ namespace BudgetTool.Queries {
                 new Store {StoreName = "Pierre's" },
                 new Store {StoreName = "Torrid" }
              };
-                var listOfStoreNames = new List<string>();
-                foreach (var record in sampleStoresToReset) {
-                    listOfStoreNames.Add(record.StoreName);
-                }
-                foreach (var record in sampleStoresToReset) {
-                    if (!allMyStoresNamesCurrent.Contains(record.StoreName)) {
-                        store.AddSingleStore(record.StoreName);
-                    }
-                }
-                var allMyStoresAfterReset = store.ReturnAllStores();
+            var listOfStoreNames = new List<string>();
+            foreach (var record in sampleStoresToReset) {
+                listOfStoreNames.Add(record.StoreName);
             }
-            public void ResetRowsForStoreType() {
-                var context = new MyBudgetEntities();
-                var storeType = new StoreTypeQueries();
-                storeType.RemoveAllStoreTypesAvailable();
-                var myStoreTypes = context.StoreType;
-                var allMyStoreTypes = (from type in myStoreTypes select type).ToList();
-                var allMyStoreTypeNamesCurrent = allMyStoreTypes.Select(x => x.StoreTypeName).ToList();
-                var testStoreTypesToReset = new List<StoreType> {
+            foreach (var record in sampleStoresToReset) {
+                if (!allMyStoresNamesCurrent.Contains(record.StoreName)) {
+                    store.AddSingleStore(record.StoreName);
+                }
+            }
+            var allMyStoresAfterReset = store.ReturnAllStores();
+        }
+        public void ResetRowsForStoreType() {
+            var context = new MyBudgetEntities();
+            var storeType = new StoreTypeQueries();
+            storeType.RemoveAllStoreTypesAvailable();
+            var myStoreTypes = context.StoreType;
+            var allMyStoreTypes = (from type in myStoreTypes select type).ToList();
+            var allMyStoreTypeNamesCurrent = allMyStoreTypes.Select(x => x.StoreTypeName).ToList();
+            var testStoreTypesToReset = new List<StoreType> {
                 new StoreType {StoreTypeName = "Grocieries" },
                 new StoreType {StoreTypeName = "Abby" },
                 new StoreType {StoreTypeName = "Entertainment" },
                 new StoreType {StoreTypeName = "Eatting Out" },
                 new StoreType {StoreTypeName = "Coffee" }
             };
-                var listOfStoreTypeNames = new List<string>();
-                foreach (var record in testStoreTypesToReset) {
-                    listOfStoreTypeNames.Add(record.StoreTypeName);
+            var listOfStoreTypeNames = new List<string>();
+            foreach (var record in testStoreTypesToReset) {
+                listOfStoreTypeNames.Add(record.StoreTypeName);
+            }
+            foreach (var record in testStoreTypesToReset) {
+                if (!allMyStoreTypeNamesCurrent.Contains(record.StoreTypeName)) {
+                    storeType.AddSingleStoreType(record.StoreTypeName);
                 }
-                foreach (var record in testStoreTypesToReset) {
-                    if (!allMyStoreTypeNamesCurrent.Contains(record.StoreTypeName)) {
-                        storeType.AddSingleStoreType(record.StoreTypeName);
-                    }
+            }
+            var allMyStoreTypesAfterReset = (from type in myStoreTypes select type).ToList();
+        }
+        //this resets every thing
+        public void ResetRowsForSpendatures() {
+            var context = new MyBudgetEntities();
+            var spendature = new SpendatureQueries();
+            var storeType = new StoreTypeQueries();
+            var store = new StoreQueries();
+            var spendatureType = new SpendatureTypeQueries(); 
+            spendature.RemoveAllSpendatures();
+            var sampleSpendaturesToReset = new List<Spendature> {
+                new Spendature {
+                    StoreId = store.ReturnSingleStore("Shop Rite").StoreId,
+                    StoreTypeId = storeType.ReturnSingleStoreType("Groceries").StoreTypeId,
+                    SpendatureTypeId = spendatureType.ReturnSingleSpendatureType("Groceries").SpendatureTypeId,
+                    AmountSpent = 45.89m,
+                    PurchaseDate = DateTime.Now
+                },
+                new Spendature {
+                    StoreId = store.ReturnSingleStore("Petsmart").StoreId,
+                    StoreTypeId = storeType.ReturnSingleStoreType("Abby").StoreTypeId,
+                    SpendatureTypeId = spendatureType.ReturnSingleSpendatureType("Groceries").SpendatureTypeId,
+                    AmountSpent = 45.89m,
+                    PurchaseDate = DateTime.Now
+                },
+                new Spendature {
+                    StoreId = store.ReturnSingleStore("Vet").StoreId,
+                    StoreTypeId = storeType.ReturnSingleStoreType("Abby").StoreTypeId,
+                    SpendatureTypeId = spendatureType.ReturnSingleSpendatureType("Vet").SpendatureTypeId,
+                    AmountSpent = 32.06m,
+                    PurchaseDate = DateTime.Now
+                },
+                new Spendature {
+                    StoreId = store.ReturnSingleStore("Giant").StoreId,
+                    StoreTypeId = storeType.ReturnSingleStoreType("Groceries").StoreTypeId,
+                    SpendatureTypeId = spendatureType.ReturnSingleSpendatureType("Hospitality").SpendatureTypeId,
+                    AmountSpent = 32.06m,
+                    PurchaseDate = DateTime.Now
                 }
-                var allMyStoreTypesAfterReset = (from type in myStoreTypes select type).ToList();
+            }; 
+            foreach (var record in sampleSpendaturesToReset) {
+                spendature.AddSingleSpendature(record);
+            }
         }
     }
 }

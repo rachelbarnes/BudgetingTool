@@ -68,7 +68,6 @@ namespace BudgetTool.Queries {
             foreach (var type in allMySpendatureTypes) {
                 if (!spendatureTypesInSpendatures.Contains(type.SpendatureTypeId)) {
                     mySpendatureTypes.Remove(type);
-                    context.SaveChanges();
                 }
             }
         }

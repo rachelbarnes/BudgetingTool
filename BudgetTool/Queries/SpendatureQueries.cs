@@ -4,13 +4,6 @@ using System.Linq;
 using System.Web;
 
 namespace BudgetTool.Queries {
-    /*
-    remove single
-    remove all
-    edit store type of one
-    edit store of one
-    edit spendature type of one
-    */
     public class SpendatureQueries {
         public List<Spendature> ReturnAllSpendatures() {
             var context = new MyBudgetEntities();
@@ -91,6 +84,79 @@ namespace BudgetTool.Queries {
             mySpendatures.Add(newSpendature);
             context.SaveChanges();
         }
-
+        public void AddSingleSpendature(Spendature newSpendatureToAdd) {
+            var context = new MyBudgetEntities();
+            var mySpendatures = context.Spendature;
+            var myStores = context.Store;
+            var myStoreTypes = context.StoreType;
+            var mySpendatureTypes = context.SpendatureType;
+            mySpendatures.Add(newSpendatureToAdd);
+            context.SaveChanges();
+        }
+        public void RemoveSingleSpendature(string id) {
+            var context = new MyBudgetEntities();
+            var mySpendatures = context.Spendature;
+            var spendatureId = int.Parse(id);
+            var spendatureToRemove = (from spend in mySpendatures where spend.SpendatureId == spendatureId select spend).First();
+            mySpendatures.Remove(spendatureToRemove);
+            context.SaveChanges();
+        }
+        public void RemoveSingleSpendature(int id) {
+            var context = new MyBudgetEntities();
+            var mySpendatures = context.Spendature;
+            var spendatureToRemove = (from spend in mySpendatures where spend.SpendatureId == id select spend).First();
+            mySpendatures.Remove(spendatureToRemove);
+            context.SaveChanges();
+        }
+        public void RemoveAllSpendatures() {
+            var context = new MyBudgetEntities();
+            var mySpendatures = context.Spendature;
+            var allMySpendatures = (from spend in mySpendatures select spend).ToList();
+            foreach (var record in allMySpendatures) {
+                RemoveSingleSpendature(record.SpendatureId);
+            }
+        }
+        public void EditStoreTypeOfSelectedSpendature(string spendatureId, string previousStoreTypeName, string udpatedStoreTypeName) {
+            var context = new MyBudgetEntities();
+            var mySpendatures = context.Spendature;
+            var myStoreTypes = context.StoreType;
+            var spendatureIdInt = int.Parse(spendatureId);
+            var spendatureToEdit = (from spend in mySpendatures where spend.SpendatureId == spendatureIdInt select spend).First();
+            var previousStoreType = (from type in myStoreTypes where type.StoreTypeName == previousStoreTypeName select type).First();
+            var udpatedStoreType = (from type in myStoreTypes where type.StoreTypeName == udpatedStoreTypeName select type).First();
+            if (spendatureToEdit.StoreTypeId == previousStoreType.StoreTypeId) {
+                spendatureToEdit.StoreTypeId = udpatedStoreType.StoreTypeId;
+                context.SaveChanges();
+            }
+            //else throw exception
+        }
+        public void EditStoreOfSelectedSpendature(string spendatureId, string previousStoreName, string updatedStoreName) {
+            var context = new MyBudgetEntities();
+            var mySpendatures = context.Spendature;
+            var myStores = context.Store;
+            var spendatureIdInt = int.Parse(spendatureId);
+            var spendatureToEdit = (from spend in mySpendatures where spend.SpendatureId == spendatureIdInt select spend).First();
+            var previousStore = (from store in myStores where store.StoreName == previousStoreName select store).First();
+            var updatedStore = (from store in myStores where store.StoreName == updatedStoreName select store).First();
+            if (spendatureToEdit.StoreId == previousStore.StoreId) {
+                spendatureToEdit.StoreId = updatedStore.StoreId;
+                context.SaveChanges();
+            }
+            //else throw exception
+        }
+        public void EditSpendatureTypeOfSelectedSpendature(string spendatureId, string previousSpendatureTypeName, string updatedSpendatureTypeName) {
+            var context = new MyBudgetEntities();
+            var mySpendatures = context.Spendature;
+            var mySpendatureTypes = context.SpendatureType;
+            var spendatureIdInt = int.Parse(spendatureId);
+            var spendatureToEdit = (from spend in mySpendatures where spend.SpendatureId == spendatureIdInt select spend).First();
+            var previousStore = (from type in mySpendatureTypes where type.SpendatureTypeName == previousSpendatureTypeName select type).First();
+            var updatedSpendatureType = (from type in mySpendatureTypes where type.SpendatureTypeName == updatedSpendatureTypeName select type).First();
+            if (spendatureToEdit.SpendatureTypeId == previousStore.SpendatureTypeId) {
+                spendatureToEdit.SpendatureTypeId = updatedSpendatureType.SpendatureTypeId;
+                context.SaveChanges();
+            }
+            //else throw exception
+        }
     }
 }

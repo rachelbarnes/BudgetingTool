@@ -57,7 +57,6 @@ namespace BudgetTool.Queries {
             foreach (var type in allMyStoreTypes) {
                 if (!storeTypesInSpendatures.Contains(type.StoreTypeId)){
                     myStoreTypes.Remove(type);
-                    context.SaveChanges(); 
                 }
             }
             var allMyStoreTypesUpdated = (from type in allMyStoreTypes select type).ToList(); 

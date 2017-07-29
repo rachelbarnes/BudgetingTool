@@ -42,11 +42,91 @@ namespace BudgetToolTests.QueryTests {
                 }
             };
             Assert.AreEqual(expectedDefinedSpendatures.Count(), actualDefinedSpendatures.Count());
-            Assert.AreEqual(expectedDefinedSpendatures[0].SpendatureId, actualDefinedSpendatures[0].SpendatureId); 
-            Assert.AreEqual(expectedDefinedSpendatures[1].SpendatureId, actualDefinedSpendatures[1].SpendatureId); 
-            Assert.AreEqual(expectedDefinedSpendatures[2].SpendatureId, actualDefinedSpendatures[2].SpendatureId); 
-            //Assert.AreEqual(expectedDefinedSpendatures, actualDefinedSpendatures); 
+            Assert.AreEqual(expectedDefinedSpendatures[0].SpendatureId, actualDefinedSpendatures[0].SpendatureId);
+            Assert.AreEqual(expectedDefinedSpendatures[1].SpendatureId, actualDefinedSpendatures[1].SpendatureId);
+            Assert.AreEqual(expectedDefinedSpendatures[2].SpendatureId, actualDefinedSpendatures[2].SpendatureId);
         }
-        //still have to test add single spendature, add defined spendature to view, populate view and other methods still writing for SpendatureQueries
+        [Test]
+        public void TestAddSpendature() {
+            var spend = new SpendatureQueries();
+            var newSpendature = new Spendature {
+                SpendatureId = 8,
+                StoreId = 1022,
+                StoreTypeId = 3,
+                AmountSpent = 256.68m,
+                PurchaseDate = DateTime.Now,
+                SpendatureTypeId = 2022
+            };
+            var lastSpendature = spend.ReturnAllSpendatures().Last();
+            Assert.AreEqual(newSpendature.SpendatureId, lastSpendature.SpendatureId);
+            Assert.AreEqual(newSpendature.StoreId, lastSpendature.StoreId);
+            Assert.AreEqual(newSpendature.StoreTypeId, lastSpendature.StoreTypeId);
+            Assert.AreEqual(newSpendature.SpendatureTypeId, lastSpendature.SpendatureTypeId);
+            Assert.AreEqual(newSpendature.AmountSpent, lastSpendature.AmountSpent);
+        }
+        [Test]
+        public void TestAddSpendature2() {
+            var spend = new SpendatureQueries();
+            var newSpendature = new Spendature {
+                SpendatureId = 9,
+                StoreId = 1022,
+                StoreTypeId = 3,
+                AmountSpent = 56.69m,
+                PurchaseDate = DateTime.Now,
+                SpendatureTypeId = 2022
+            };
+            spend.AddSingleSpendature(newSpendature);
+            var lastSpendature = spend.ReturnAllSpendatures().Last();
+            Assert.AreEqual(newSpendature.SpendatureId, lastSpendature.SpendatureId);
+            Assert.AreEqual(newSpendature.StoreId, lastSpendature.StoreId);
+            Assert.AreEqual(newSpendature.StoreTypeId, lastSpendature.StoreTypeId);
+            Assert.AreEqual(newSpendature.SpendatureTypeId, lastSpendature.SpendatureTypeId);
+            Assert.AreEqual(newSpendature.AmountSpent, lastSpendature.AmountSpent);
+        }
+        [Test]
+        public void TestRemoveSingleSpendature() {
+            var spend = new SpendatureQueries();
+            spend.RemoveSingleSpendature("1");
+            var countOfRemainingActual = spend.ReturnAllSpendatures().Count();
+            Assert.AreEqual(3, countOfRemainingActual);
+        }
+        [Test]
+        public void TestEditStoreTypeInSpendature() {
+            var spend = new SpendatureQueries();
+            spend.EditStoreTypeOfSelectedSpendature("18", "Groceries", "Abby");
+            var actualSpendature = spend.ReturnSingleSpendature(18);
+            Assert.AreEqual(3, actualSpendature.StoreTypeId);
+        }
+        [Test]
+        public void TestEditStoreInSpendature() {
+            var spend = new SpendatureQueries();
+            spend.EditStoreOfSelectedSpendature("19", "Petsmart", "PetValu");
+            var actualSpendature = spend.ReturnSingleSpendature(19);
+            Assert.AreEqual(1017, actualSpendature.StoreId);
+        }
+        [Test]
+        public void TestEditSpendatureTypeInSpendature() {
+            var spend = new SpendatureQueries();
+            spend.EditSpendatureTypeOfSelectedSpendature("21", "Hospitality", "Social");
+            var actualSpendature = spend.ReturnSingleSpendature(21);
+            Assert.AreEqual(2024, actualSpendature.SpendatureTypeId); 
+        }
+
+
+        [Test]
+        public void TestRemoveAndResetSpendatureTable() {
+            var reset = new ResetTablesInDB();
+            var spend = new SpendatureQueries();
+            spend.RemoveAllSpendatures();
+            Assert.AreEqual(0, spend.ReturnAllSpendatures().Count());
+            reset.ResetRowsForSpendatures();
+            var allMySpendatures = spend.ReturnAllSpendatures();
+            Assert.AreEqual(4, allMySpendatures.Count());
+            Assert.AreEqual(18, allMySpendatures[0].SpendatureId);
+            Assert.AreEqual(19, allMySpendatures[1].SpendatureId);
+            Assert.AreEqual(20, allMySpendatures[2].SpendatureId);
+            Assert.AreEqual(21, allMySpendatures[3].SpendatureId);
+        }
+        //still have to test still writing for SpendatureQueries
     }
 }
